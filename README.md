@@ -2,7 +2,11 @@
 
 ## Installation
 
-See instructions (in spanish) here: https://github.com/gorkau/vagrant-prestashop
+    git clone https://github.com/estribiyo/vagrant-prestashop.git
+    cd vagrant-prestashop
+    vagrant up --provision
 
 ## How to use
 
+    vagrant up
+    http://
