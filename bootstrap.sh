@@ -14,7 +14,7 @@ MYSQL_PASS="root"
 SRCDIR="/usr/src"
 STOREUSER="$(hostname)@$FQDN"
 STOREPASS="AUTO"
-PRESTAVERSION=1.7.7.x
+PRESTAVERSION=1.6.1.x
 PHPVERSION=7.3
 DELETE_ON_REMOVE=0
 
@@ -57,7 +57,7 @@ function mysql_prepare() {
 function requirements() {
     export DEBIAN_FRONTEND=noninteractive
     apt-get update && apt-get upgrade -y
-    PKGS='pwgen facter puppet curl git'
+    PKGS='pwgen facter puppet curl git vim'
     WEB="mariadb-server php${PHPVERSION} php${PHPVERSION}-curl php${PHPVERSION}-intl php${PHPVERSION}-mbstring php${PHPVERSION}-zip php-mysql php${PHPVERSION}-gd php${PHPVERSION}-xml"
     for pkg in $PKGS $WEB; do
         if dpkg --get-selections | grep -q "^$pkg[[:space:]]*install$" >/dev/null; then
@@ -143,6 +143,7 @@ function enable_site() {
     echo "</VirtualHost>" >> /etc/apache2/sites-available/$FQDN.conf
 
     echo -e "${GREEN_COL}Activando site en Apache${NULL_COL}"
+    a2enmod rewrite
     a2ensite $FQDN > /dev/null
     a2dissite 000-default 
     /etc/init.d/apache2 restart
